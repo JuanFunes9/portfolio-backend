@@ -1,8 +1,11 @@
 const router = require('express').Router();
+const { check } = require( 'express-validator' );
+
+//------------------Middlewares------------------//
+const validarCampos = require( '../middlewares/validarCampos' );
 
 //------------------Controllers------------------//
 const {
-	getIndex,
 	getCV,
 	sendEmail
 } = require('../controllers/controllers')
@@ -11,12 +14,15 @@ const {
 
 
 //------------------Routes------------------//
-router.get('/', getIndex);
 
 router.get('/curriculum', getCV);
 
-router.post('/send-form', [
-	
+router.post('/send-email', [
+	check('name', 'El nombre es obligatorio').notEmpty(),
+  check('email', 'El email es obligatorio y debe ser correcto').isEmail(),
+  check('subject', 'El asunto es obligatorio').notEmpty(),
+  check('text', 'El cuerpo del mensaje es obligatorio').notEmpty(),
+  validarCampos
 ], sendEmail);
 
 router.get('/*', (req, res) => {

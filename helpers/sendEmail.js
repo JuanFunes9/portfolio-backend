@@ -1,4 +1,5 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
+
 
 const sendEmail = ({ name, email, subject, text }) => {
 	const transporter = nodemailer.createTransport({
@@ -6,8 +7,8 @@ const sendEmail = ({ name, email, subject, text }) => {
 		port: 465,
 		secure: true,
 		auth: {
-			user: 'juanfuneslg@gmail.com',
-			pass: 'zhvaelpqqgsbqrxm'
+			user: process.env.NODEMAILER_EMAIL,
+			pass: process.env.NODEMAILER_PW
 		}
 	});
 
@@ -16,7 +17,7 @@ const sendEmail = ({ name, email, subject, text }) => {
 		to: 'juan.funes.96@outlook.com',
 		subject,
 		text:
-			`New message from: ${name} <${email}>\n\ntext: ${text}`
+			`New message from: ${name} <${email}>\n\n${text}`
 	};
 
 	transporter.sendMail(mailOptions, (error) => {
