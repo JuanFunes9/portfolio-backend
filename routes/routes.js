@@ -27,7 +27,7 @@ router.post('/send-email', [
 
 router.get('/*', (req, res) => {
   res.status(404).json({
-    msg: "Ruta no implementada."
+    msg: "Ruta no implementada!!."
   })
 });
 
